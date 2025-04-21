@@ -1,18 +1,27 @@
 import Image from "next/image";
+import { revalidatePath } from "next/cache";
 
 export default async function Home() {
-  try {
-    const fetchHello = async () => {
-      const response = await fetch(`${process.env.API_URL}/hello`);
-      console.log(response);
-    };
-    await fetchHello();
-  } catch (error) {
-    console.error(error);
+  const res = await fetch(
+    `${process.env.API_URL ?? 'http://localhost:3000'}/api/hello`,
+    {
+      // 動的に呼び出したい場合はキャッシュを無効化
+      cache: 'no-store',           // Next.js <15 は省略時 force-cache
+      // あるいは next: { revalidate: 0 } でも同じ効果
+    },
+  )
+
+  if (!res.ok) {
+    throw new Error(`failed, status ${res.status}`)
   }
+
+  /** @type {{ message: string; name: string }} */
+  const data = await res.json()
 
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+      <div>{data?.name || ''}</div>
+      <div>{data?.message || ''}</div>
       <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
         <Image
           className="dark:invert"

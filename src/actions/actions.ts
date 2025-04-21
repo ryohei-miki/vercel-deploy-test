@@ -4,7 +4,7 @@ export async function submitMessage(formData: FormData) {
   const message = formData.get('message');
   
   try {
-    const response = await fetch('/hello', {
+    const response = await fetch(`${process.env.API_URL ?? 'http://localhost:3000'}/hello`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

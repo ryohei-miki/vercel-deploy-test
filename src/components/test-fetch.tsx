@@ -2,7 +2,7 @@
 
 export const TestFetch = async () => {
   const res = await fetch(
-    `${process.env.API_URL ?? 'http://localhost:3000'}/api/hello`,
+    `${process.env.API_URL ?? 'http://localhost:3000'}/hello`,
   )
 
   if (!res.ok) {

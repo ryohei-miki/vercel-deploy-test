@@ -1,21 +1,12 @@
 import Image from "next/image";
+import { TestFetch } from "@/components/test-fetch";
 
 export default async function Home() {
-  const res = await fetch(
-    `${process.env.API_URL ?? 'http://localhost:3000'}/api/hello`,
-  )
 
-  if (!res.ok) {
-    throw new Error(`failed, status ${res.status}`)
-  }
-
-  /** @type {{ message: string; name: string }} */
-  const data = await res.json()
 
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <div>{data?.name || ''}</div>
-      <div>{data?.message || ''}</div>
+      <TestFetch />
       <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
         <Image
           className="dark:invert"

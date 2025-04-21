@@ -1,14 +1,8 @@
 import Image from "next/image";
-import { revalidatePath } from "next/cache";
 
 export default async function Home() {
   const res = await fetch(
     `${process.env.API_URL ?? 'http://localhost:3000'}/api/hello`,
-    {
-      // 動的に呼び出したい場合はキャッシュを無効化
-      cache: 'no-store',           // Next.js <15 は省略時 force-cache
-      // あるいは next: { revalidate: 0 } でも同じ効果
-    },
   )
 
   if (!res.ok) {

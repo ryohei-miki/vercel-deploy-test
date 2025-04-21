@@ -1,14 +1,10 @@
 export default async function Hello() {
   try {
     const fetchHello = async () => {
-      const response = await fetch(`${process.env.API_URL}/api/hello`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      const response = await fetch(
+        `${process.env.BASE_API_URL}/forecast?q=Tokyo&APPID=${process.env.API_KEY}&units=metric&lang=ja`
+      );
       console.log(response);
-
     };
     await fetchHello();
   } catch (error) {
